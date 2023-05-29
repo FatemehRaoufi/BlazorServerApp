@@ -16,7 +16,7 @@ namespace BlazorServerApp.Pages
         public IEmployeeService EmployeeService { get; set; }
 
         public Employee Employee { get; set; } = new Employee();
-        public EditEmployeeModel EditEmployeeModel { get; set; } = new Employee();
+        public EditEmployeeModel EditEmployeeModel { get; set; } = new EditEmployeeModel();
 
         [Inject]
         public IDepartmentService DepartmentService { get; set; }
