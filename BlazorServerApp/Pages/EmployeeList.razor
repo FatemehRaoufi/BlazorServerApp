@@ -1,0 +1,111 @@
+﻿@*Parent Component View*@
+
+@page "/"
+
+@inherits EmployeeListBase
+
+<h3>Employee List</h3>
+<br />
+<b>Name1 :</b> @Name
+<br />
+<b>Name with salutation:</b> @(Gender == "Male" ? $"Mr. {Name}" : $"Miss. {Name}")
+<br />
+<b>Input Name :</b>
+<input value="@Name" />
+<br />
+<b>Input Name with onchange event:</b>
+<input value="@Name" @onchange="@(e => { Name = e.Value.ToString(); })" />
+<br />
+<b>Input with bind Name:</b>
+<input @bind="Name" />
+<br />
+<b>Input with bind=Name && bind:event="oninput":</b>
+<input @bind="Name" @bind:event="oninput" />
+<br />
+
+<b>Colour :</b>
+<input @bind="Colour" />
+<div @bind-style="Colour" @bind-style:event="onchange">
+    <h3>The background colour changing by text changes</h3>
+</div>
+
+<br />
+<div>
+    <textarea @bind="Description" @bind:event="oninput" />
+</div>
+<div>
+    Count : @Description.Length
+</div>
+<br />
+<div>
+    SelectedEmployeesCount : @SelectedEmployeesCount
+</div>
+<br />
+@*//using Parent Component Class:*@
+<input type="checkbox" id="showFooter" @bind="ShowFooter" />
+<label for="showFooter">Show Footer</label>
+
+@*ReSource: https://www.pragimtech.com/blog/blazor/blazor-component-parameters/*@
+@*//End......*@
+
+
+@if (Employees == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="card-group">
+    @foreach (var employee in Employees)
+    {
+        <div class="card col-md-3">
+            <div class="card-header">
+                    @*//using Parent Component Class to show the count of checkboxes that are checked:
+            //ChildEmplyeeList tag is the name of child component (ChildEmplyeeList.razor) which  is used DisplayEmployeeBase.cs as Component Class and shows checkbox count
+*@ 
+                     <ChildEmplyeeList OnEmployeeSelection="EmployeeSelectionChanged">
+
+                        @* //Showing checkbox from DisplayEmployee child component*@
+                    </ChildEmplyeeList>
+
+                    <br />
+
+                    @*  <DisplayEmployee Employee="employee" ShowFooter="ShowFooter"> </DisplayEmployee>*@
+
+                    @*//End......*@
+                <h3>@employee.FirstName  @employee.LastName</h3>
+            </div>
+                <img class="card-img-top imageThumbnail" src="@employee.PhotoPath"/>
+                @*<img class="card-img-top imageThumbnail" src="@employee.PhotoPath" @onmousemove="@Mouse_Move" />*@
+                @*<img class="card-img-top imageThumbnail" src="@employee.PhotoPath"
+             @onmousemove="@(e => Coordinates = $"X = {e.ClientX} Y = {e.ClientY}")" />*@
+                
+             <h1>@Coordinates</h1>
+            <button class="btn btn-primary" @onclick="@Button_Click">@ButtonText</button>
+                <div class="card-footer text-center @CssClass">
+
+                <a href="@($"employeedetails/{employee.EmployeeId}")" class="btn btn-primary m-1">View</a>
+
+                    <a href="@($"editemployee/{employee.EmployeeId}")" class="btn btn-primary m-1">Edit</a>
+               
+
+
+                <a href="#" class="btn btn-danger m-1">Delete</a>
+            </div>
+        </div>
+        
+           @* <br />*@
+    }
+</div>
+}
+@*Instead of these codes: 
+
+@code {
+    ....
+    protected string Coordinates { get; set; }
+    .....
+}
+
+
+we implemented: EmployeeListBase.cs and added this: @inherits EmployeeListBase to this page.
+*@
