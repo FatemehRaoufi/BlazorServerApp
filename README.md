@@ -1,6 +1,6 @@
 # Employee Management Blazor Server App
 
-A complete Blazor Server application for managing employee data, using layered architecture and RESTful APIs.
+A sample Blazor Server application for managing employee data, using layered architecture and RESTful APIs
 
 ---
 
