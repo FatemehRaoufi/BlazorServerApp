@@ -10,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-//builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddHttpClient();
 
 //builder.Services.AddSingleton<IEmployeeService,EmployeeService>();//Solution For Blazor Error - Cannot provide a value for property, There is no registered service of type [TypeName]
